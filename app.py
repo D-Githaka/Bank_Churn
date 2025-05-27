@@ -399,7 +399,7 @@ try:
                shadow=True, startangle=90)
         ax.axis('equal')
         ax.set_title("Proportion of Customer Churned and Retained")
-        st.pyplot(fig)
+        st.sidebar.pyplot(fig)
 
     elif eda_option == "Churn by Geography":
         fig, ax = plt.subplots(figsize=(8, 5))
