@@ -382,7 +382,7 @@ try:
          df = df.drop(["RowNumber", "CustomerId", "Surname"], axis = 1, errors='ignore') # Use errors='ignore' if cols might not exist
          return df
 
-    original_data_path = '/content/drive/My Drive/Churn_Modelling.csv' # Adjust this path if you saved it elsewhere
+    original_data_path = 'Churn_Modelling.csv'
     original_df = load_original_data(original_data_path)
 
     st.subheader("Explore Customer Data Characteristics")
@@ -427,4 +427,4 @@ except Exception as e:
 # --- About Section ---
 st.sidebar.header("About")
 st.sidebar.info("This app uses a machine learning model (Random Forest) to predict customer churn based on various attributes.")
-st.sidebar.write("Developed by [Your Name]")
+st.sidebar.write("Developed by Denis Githaka")
