@@ -365,63 +365,69 @@ elif input_method == 'Upload CSV for Batch Prediction':
             st.write("Please check the format and content of your CSV file.")
 
 
-# --- Exploratory Data Analysis (Optional Section) ---
-# You can add a section to display some general EDA plots
-# You might want to load a sample of the training data for this, or analyze the uploaded data
+# --- Exploratory Data Analysis (Dropdown) ---
 
 st.sidebar.header("Exploratory Data Analysis")
-st.sidebar.info("The following plots are based on the characteristics of the original training dataset.")
+st.sidebar.info("Choose a chart to explore customer behavior.")
 
-# Load a small sample of the original data or the full training data if manageable
-# Assuming you have saved the original training data (before feature engineering) as 'original_train_data.csv'
+# Load original data
 try:
-    @st.cache_data # Use cache_data for data loading
+    @st.cache_data
     def load_original_data(path):
-         df = pd.read_csv(path)
-         # Apply initial cleaning steps like dropping columns if they were part of the original notebook
-         df = df.drop(["RowNumber", "CustomerId", "Surname"], axis = 1, errors='ignore') # Use errors='ignore' if cols might not exist
-         return df
+        df = pd.read_csv(path)
+        df = df.drop(["RowNumber", "CustomerId", "Surname"], axis=1, errors='ignore')
+        return df
 
     original_data_path = 'Churn_Modelling.csv'
     original_df = load_original_data(original_data_path)
 
-    st.subheader("Explore Customer Data Characteristics")
+    # Dropdown to select EDA chart
+    eda_option = st.sidebar.selectbox("Select a plot to display:", (
+        "Churn Distribution",
+        "Churn by Geography",
+        "Churn by Gender",
+        "Age Distribution by Churn Status"
+    ))
 
-    # Example 1: Churn Distribution
-    labels = 'Exited', 'Retained'
-    sizes = [original_df['Exited'][original_df['Exited']==1].count(), original_df['Exited'][original_df['Exited']==0].count()]
-    explode = (0, 0.1)
-    fig_churn_dist, ax_churn_dist = plt.subplots(figsize=(6, 6))
-    ax_churn_dist.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    ax_churn_dist.axis('equal')
-    ax_churn_dist.set_title("Proportion of customer churned and retained", size = 14)
-    st.pyplot(fig_churn_dist)
+    st.subheader(f"{eda_option}")
 
+    if eda_option == "Churn Distribution":
+        labels = ['Exited', 'Retained']
+        sizes = [
+            original_df['Exited'][original_df['Exited'] == 1].count(),
+            original_df['Exited'][original_df['Exited'] == 0].count()
+        ]
+        explode = (0, 0.1)
+        fig, ax = plt.subplots(figsize=(6, 6))
+        ax.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+               shadow=True, startangle=90)
+        ax.axis('equal')
+        ax.set_title("Proportion of Customer Churned and Retained")
+        st.pyplot(fig)
 
-    # Example 2: Churn vs Geography
-    fig_geo, ax_geo = plt.subplots(figsize=(8, 5))
-    sns.countplot(x='Geography', hue = 'Exited',data = original_df, ax=ax_geo)
-    ax_geo.set_title('Churn by Geography')
-    st.pyplot(fig_geo)
+    elif eda_option == "Churn by Geography":
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.countplot(x='Geography', hue='Exited', data=original_df, ax=ax)
+        ax.set_title("Churn by Geography")
+        st.pyplot(fig)
 
-    # Example 3: Churn vs Gender
-    fig_gender, ax_gender = plt.subplots(figsize=(8, 5))
-    sns.countplot(x='Gender', hue = 'Exited',data = original_df, ax=ax_gender)
-    ax_gender.set_title('Churn by Gender')
-    st.pyplot(fig_gender)
+    elif eda_option == "Churn by Gender":
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.countplot(x='Gender', hue='Exited', data=original_df, ax=ax)
+        ax.set_title("Churn by Gender")
+        st.pyplot(fig)
 
-    # Example 4: Age Distribution for Churned vs Retained
-    fig_age, ax_age = plt.subplots(figsize=(8, 5))
-    sns.boxplot(y='Age', x = 'Exited', hue = 'Exited',data = original_df , ax=ax_age)
-    ax_age.set_title('Age Distribution by Churn Status')
-    st.pyplot(fig_age)
-
+    elif eda_option == "Age Distribution by Churn Status":
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.boxplot(y='Age', x='Exited', hue='Exited', data=original_df, ax=ax)
+        ax.set_title("Age Distribution by Churn Status")
+        st.pyplot(fig)
 
 except FileNotFoundError:
-    st.sidebar.warning(f"Original data file not found at '{original_data_path}'. EDA plots based on the original dataset cannot be displayed.")
+    st.sidebar.warning(f"Original data file not found at '{original_data_path}'. EDA plots cannot be displayed.")
 except Exception as e:
     st.sidebar.error(f"Error loading original data or generating EDA plots: {e}")
+
 
 
 # --- About Section ---
