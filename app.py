@@ -405,19 +405,19 @@ try:
         fig, ax = plt.subplots(figsize=(8, 5))
         sns.countplot(x='Geography', hue='Exited', data=original_df, ax=ax)
         ax.set_title("Churn by Geography")
-        st.pyplot(fig)
+        st.sidebar.pyplot(fig)
 
     elif eda_option == "Churn by Gender":
         fig, ax = plt.subplots(figsize=(8, 5))
         sns.countplot(x='Gender', hue='Exited', data=original_df, ax=ax)
         ax.set_title("Churn by Gender")
-        st.pyplot(fig)
+        st.sidebar.pyplot(fig)
 
     elif eda_option == "Age Distribution by Churn Status":
         fig, ax = plt.subplots(figsize=(8, 5))
         sns.boxplot(y='Age', x='Exited', hue='Exited', data=original_df, ax=ax)
         ax.set_title("Age Distribution by Churn Status")
-        st.pyplot(fig)
+        st.sidebar.pyplot(fig)
 
 except FileNotFoundError:
     st.sidebar.warning(f"Original data file not found at '{original_data_path}'. EDA plots cannot be displayed.")
