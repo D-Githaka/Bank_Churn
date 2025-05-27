@@ -2,7 +2,7 @@
 """
 Created on Mon Jan 22 13:00:45 2024
 
-@author: Your Name
+@author: Denis Githaka
 """
 
 # REQUIRED LIBRARIES
