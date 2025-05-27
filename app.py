@@ -12,10 +12,6 @@ import numpy as np
 import joblib # To save and load the model
 import matplotlib.pyplot as plt
 import seaborn as sns
-# Assuming you might use PolynomialFeatures, LogisticRegression, SVC, XGBClassifier if you add options later
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier # Ensure XGBoost is imported if using it
 import warnings
