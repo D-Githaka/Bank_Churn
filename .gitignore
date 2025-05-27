@@ -1,0 +1,23 @@
+gitignore
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment directory
+venv/
+.env/
+
+# Ignore Jupyter Notebook specific files
+.ipynb_checkpoints/
+
+# Ignore specific data files if they are large or shouldn't be tracked
+# For this project, your data and pkls are likely okay to track
+# if your_large_data.csv
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore editor specific files
+.vscode/
+.idea/
