@@ -385,7 +385,7 @@ try:
         "Age Distribution by Churn Status"
     ))
 
-    st.subheader(f"{eda_option}")
+    st.sidebar.subheader(f"{eda_option}")
 
     if eda_option == "Churn Distribution":
         labels = ['Exited', 'Retained']
